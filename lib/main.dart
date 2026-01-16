@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import 'game_logic.dart';
 
 void main() {
-  //GameLogic().gameLogic();
   runApp(MyApp());
   GameLogic().gameLogic();
 }
@@ -58,10 +57,6 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var m = context.watch<MyAppState>();
-
-    /* void caller2() {
-      winCondition = Play().play();
-    }*/
 
     return Scaffold(
       body: Center(

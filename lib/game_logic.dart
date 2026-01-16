@@ -27,61 +27,6 @@ final List<dynamic> cardValue = [
   "k",
 ];
 
-final List<String> cardImages = [
-  "assets/cards/2c.png",
-  "assets/cards/2d.png",
-  "assets/cards/2h.png",
-  "assets/cards/2s.png",
-  "assets/cards/3c.png",
-  "assets/cards/3d.png",
-  "assets/cards/3h.png",
-  "assets/cards/3s.png",
-  "assets/cards/4c.png",
-  "assets/cards/4d.png",
-  "assets/cards/4h.png",
-  "assets/cards/4s.png",
-  "assets/cards/5c.png",
-  "assets/cards/5d.png",
-  "assets/cards/5h.png",
-  "assets/cards/5s.png",
-  "assets/cards/6c.png",
-  "assets/cards/6d.png",
-  "assets/cards/6h.png",
-  "assets/cards/6s.png",
-  "assets/cards/7c.png",
-  "assets/cards/7d.png",
-  "assets/cards/7h.png",
-  "assets/cards/7s.png",
-  "assets/cards/8c.png",
-  "assets/cards/8d.png",
-  "assets/cards/8h.png",
-  "assets/cards/8s.png",
-  "assets/cards/9c.png",
-  "assets/cards/9d.png",
-  "assets/cards/9h.png",
-  "assets/cards/9s.png",
-  "assets/cards/10c.png",
-  "assets/cards/10d.png",
-  "assets/cards/10h.png",
-  "assets/cards/10s.png",
-  "assets/cards/jc.png",
-  "assets/cards/jd.png",
-  "assets/cards/jh.png",
-  "assets/cards/js.png",
-  "assets/cards/qc.png",
-  "assets/cards/qd.png",
-  "assets/cards/qh.png",
-  "assets/cards/qs.png",
-  "assets/cards/kc.png",
-  "assets/cards/kd.png",
-  "assets/cards/kh.png",
-  "assets/cards/ks.png",
-  "assets/cards/ac.png",
-  "assets/cards/ad.png",
-  "assets/cards/ah.png",
-  "assets/cards/as.png",
-];
-
 var incrementor = 0;
 var dealerCardCount = 0;
 var playerCardCount = 0;
@@ -112,7 +57,6 @@ class NewDeck {
 
     for (var i = 0; i < cardValue.length; i++) {
       for (var j = 0; j < 4; j++) {
-        //deck.add(Cards("/assets/cards/${cardValue[i]}${cardSuits[i]}.png"));
         deck.add(Cards(cardValue[i].toString(), cardSuits[j].toString()));
       }
     }
@@ -225,9 +169,8 @@ class Player {
   }
 }
 
-var deck = Deck(); // declare a new deck
+var deck = Deck();
 
-// create the dealer and player
 var dealer = Dealer();
 var player = Player();
 
@@ -244,28 +187,6 @@ class Restart {
     GameLogic().gameLogic();
   }
 }
-
-/*class NewHand {
-  void newHand() {
-    playerHand.clear();
-    dealerHand.clear();
-
-    for (var i = 0; i <= deck.cards.length && i < 2; i++) {
-      var drawcard = deck.cards[incrementor];
-      playerHand.add(drawcard);
-      playerImages.add(drawcard.toString());
-      incrementor++;
-      drawcard = deck.cards[incrementor];
-      dealerHand.add(drawcard);
-      dealerImages.add(drawcard.toString());
-      incrementor++;
-      dealerCardCount++;
-      playerCardCount++;
-    }
-    dealer.dealerImages();
-    player.playerImages();
-  }
-}*/
 
 class DrawCard {
   // target is the playerHand or the dealerHand
@@ -295,7 +216,6 @@ class DealerDraw {
       dealerCardCount = dealerCardCount + 1;
 
       var newCard = DrawCard().drawCard(dealer);
-      // need to rerender the card
 
       dealersum = dealer.calculateSum();
     }
@@ -311,7 +231,6 @@ class HitFunction {
     playerCardCount = playerCardCount + 1;
 
     var newCard = DrawCard().drawCard(player);
-    // rerender cards
 
     var playerSum = player.calculateSum();
     var dealerSum = dealer.calculateSum();
@@ -319,7 +238,6 @@ class HitFunction {
     if (playerSum > 21) {
       canhit = false;
       print("You busted dealer wins");
-      // disable hit and stay buttons
     }
 
     print("The dealersum is: ");
@@ -345,30 +263,24 @@ class Deal {
     playerCardCount = playerCardCount + 2;
 
     if (player.calculateSum() == 21) {
-      // disable hit button
+      // disable hit button. To be added
       canhit = false;
     }
-    // rerender cards
 
-    //test play class
-    Play().play();
+    if (dealer.calculateSum() < 17) {
+      DealerDraw().dealerDraw();
+    }
   }
 }
 
 class Play {
   String play() {
     var dealerInitalCard = dealerHand[0];
-    // render the back of the first card;
 
     DealerDraw().dealerDraw();
 
     var dealerSum = dealer.calculateSum();
     var playerSum = player.calculateSum();
-
-    // display the player and dealer sums
-
-    //print(playerSum);
-    //print(dealerSum);
 
     String resultText = "";
 
@@ -401,12 +313,6 @@ class Play {
   }
 }
 
-class ImageParser {
-  void imageParser() {
-    for (var i = 0; i <= dealerHand.length; i++) {}
-  }
-}
-
 class GameLogic {
   void gameLogic() {
     incrementor = 0;
@@ -417,9 +323,6 @@ class GameLogic {
     playerHand.clear();
     dealerImages.clear();
     playerImages.clear();
-
-    //dealer = new Dealer();
-    //player = new Player();
     canhit = false;
 
     NewDeck().newDeck();
@@ -429,14 +332,6 @@ class GameLogic {
     }
 
     Deal().deal();
-
-    //print(deck.cards);
-
-    //NewHand().newHand();
-
-    /*while (dealer.calculateSum() < 21 && dealerAceCount != 1) {
-      DrawCard().drawCard(dealer);
-    }*/
 
     print("The dealers hand");
     print(dealerImages);
@@ -449,14 +344,5 @@ class GameLogic {
 
     print("The playersum is");
     print(player.calculateSum());
-
-    // DrawCard().drawCard(player);
-    // DrawCard().drawCard(dealer);
-
-    /*for (var i = 0; i < deck.cards.length; i++) {
-      debugPrint(deck.cards[i].toString());
-    }*/
-
-    //debugPrint("Test Message");
   }
 }
